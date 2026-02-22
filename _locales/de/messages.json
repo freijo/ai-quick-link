@@ -1,0 +1,35 @@
+{
+  "extName": { "message": "AI Quick Link ⚡" },
+  "extDescription": { "message": "Sende markierten Text per Hotkey oder Rechtsklick an ChatGPT, Claude oder Gemini. Mit benutzerdefinierten Menüs." },
+  "contextMenuTitle": { "message": "An KI senden (Standard) 🚀" },
+  
+  "optionsTitle": { "message": "AI Quick Link Einstellungen" },
+  "lblProvider": { "message": "KI-Assistent wählen:" },
+  "lblCustomProviders": { "message": "Eigene Anbieter verwalten:" },
+  "phName": { "message": "Name (z.B. Mistral)" },
+  "phUrl": { "message": "URL (z.B. https://chat.mistral.ai)" },
+  "btnAdd": { "message": "Hinzufügen" },
+  "lblMyList": { "message": "Meine Liste:" },
+  "btnDelete": { "message": "Löschen" },
+
+  "lblHotkey": { "message": "Standard Hotkey:" },
+  "btnChangeHotkey": { "message": "Ändern" },
+  "hintHotkey": { "message": "Gilt für die Standard-Aktion." },
+
+  "lblQuickPrompts": { "message": "Rechtsklick-Menü (Quick Prompts):" },
+  "lblQuickName": { "message": "Name im Menü (z.B. 'Fasse zusammen')" },
+  "lblQuickPrefix": { "message": "Prefix (Text davor)" },
+  "lblQuickSuffix": { "message": "Suffix (Text danach)" },
+  "hintQuick": { "message": "Definiere eigene Aktionen für das Kontextmenü." },
+
+  "lblGlobalSettings": { "message": "Standard-Aktion (Hotkey / 1. Menüpunkt):" },
+  "lblPrefix": { "message": "Standard Prefix:" },
+  "phPrefix": { "message": "z.B.: Fasse diesen Text kurz zusammen:" },
+  "hintPrefix": { "message": "Wird bei Alt+A verwendet." },
+  "lblSuffix": { "message": "Standard Suffix:" },
+  "phSuffix": { "message": "z.B.: Antworte in Stichpunkten." },
+  "hintSuffix": { "message": "Wird bei Alt+A verwendet." },
+  
+  "footerText": { "message": "Einstellungen werden automatisch gespeichert." },
+  "statusSaved": { "message": "Einstellungen gespeichert ✅" }
+}

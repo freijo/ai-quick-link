@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Testing
+coverage/
+
+# Environment variables
+.env
+.env.local
+
+# OpenClaw workspace files (private)
+.openclaw/
+AGENTS.md
+BOOTSTRAP.md
+HEARTBEAT.md
+IDENTITY.md
+SOUL.md
+TOOLS.md
+USER.md
+memory/
+daily_stock_cron.json
+depot_positions.json
+depotuebersicht_*.csv
+long_strategie.md
+prompt_daily_stock_report.md
+stock-holdings.json
+stock-report-cron-prompt.md
+stock-report-template.md
+stock_data_sources.md
+stock_report_template.md

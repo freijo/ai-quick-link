@@ -1,0 +1,35 @@
+{
+  "extName": { "message": "AI Quick Link ⚡" },
+  "extDescription": { "message": "Send selected text via hotkey or right-click to ChatGPT, Claude or Gemini. With custom menus." },
+  "contextMenuTitle": { "message": "Send to AI (Default) 🚀" },
+  
+  "optionsTitle": { "message": "AI Quick Link Settings" },
+  "lblProvider": { "message": "Select AI Assistant:" },
+  "lblCustomProviders": { "message": "Manage Custom Providers:" },
+  "phName": { "message": "Name (e.g. Mistral)" },
+  "phUrl": { "message": "URL (e.g. https://chat.mistral.ai)" },
+  "btnAdd": { "message": "Add" },
+  "lblMyList": { "message": "My List:" },
+  "btnDelete": { "message": "Delete" },
+
+  "lblHotkey": { "message": "Default Hotkey:" },
+  "btnChangeHotkey": { "message": "Change" },
+  "hintHotkey": { "message": "Applies to the default action." },
+
+  "lblQuickPrompts": { "message": "Right-Click Menu (Quick Prompts):" },
+  "lblQuickName": { "message": "Menu Name (e.g. 'Summarize')" },
+  "lblQuickPrefix": { "message": "Prefix (Text before)" },
+  "lblQuickSuffix": { "message": "Suffix (Text after)" },
+  "hintQuick": { "message": "Define custom actions for the context menu." },
+
+  "lblGlobalSettings": { "message": "Default Action (Hotkey / 1st Item):" },
+  "lblPrefix": { "message": "Default Prefix:" },
+  "phPrefix": { "message": "e.g.: Summarize this text:" },
+  "hintPrefix": { "message": "Used for Alt+A." },
+  "lblSuffix": { "message": "Default Suffix:" },
+  "phSuffix": { "message": "e.g.: Answer in bullet points." },
+  "hintSuffix": { "message": "Used for Alt+A." },
+  
+  "footerText": { "message": "Settings are saved automatically." },
+  "statusSaved": { "message": "Settings saved ✅" }
+}
