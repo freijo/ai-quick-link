@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "default_locale": "de",
   "name": "__MSG_extName__",
-  "version": "1.5",
+  "version": "1.5.1",
   "description": "__MSG_extDescription__",
   "permissions": [
     "storage",
@@ -10,7 +10,8 @@
     "scripting",
     "tabs",
     "contextMenus",
-    "windows"
+    "windows",
+    "system.display"
   ],
   "host_permissions": [
     "<all_urls>"
