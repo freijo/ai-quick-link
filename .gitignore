@@ -1,12 +1,20 @@
+# Build artifacts
+*.tar.gz
+*.zip
+ai-quick-link-extension.zip
+
 # Dependencies
 node_modules/
 
-# Build output
-dist/
+# Environment
+.env
+.env.local
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
 
 # OS
 .DS_Store
@@ -16,30 +24,15 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# Testing
+# Test coverage
 coverage/
+.nyc_output/
 
-# Environment variables
-.env
-.env.local
-
-# OpenClaw workspace files (private)
-.openclaw/
-AGENTS.md
-BOOTSTRAP.md
-HEARTBEAT.md
-IDENTITY.md
-SOUL.md
-TOOLS.md
-USER.md
+# Memory files (OpenClaw)
+MEMORY*
 memory/
-daily_stock_cron.json
-depot_positions.json
-depotuebersicht_*.csv
-long_strategie.md
-prompt_daily_stock_report.md
-stock-holdings.json
-stock-report-cron-prompt.md
-stock-report-template.md
-stock_data_sources.md
-stock_report_template.md
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
