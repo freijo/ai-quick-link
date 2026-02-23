@@ -31,27 +31,51 @@
     
     .footer { margin-top: 20px; font-size: 12px; color: #9ca3af; text-align: center; border-top: 1px solid #f3f4f6; padding-top: 15px; }
     
-    /* NEU: Ko-fi Icon-Button Style */
+    /* V1.5: Toggle Switch Styling */
+    .toggle-wrapper { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 26px;
+      background-color: #cbd5e1;
+      border-radius: 34px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .toggle-switch.active { background-color: #2563EB; }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      background-color: white;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s;
+    }
+    .toggle-switch.active::after { transform: translateX(24px); }
+    
     .kofi-button {
-      display: inline-flex; /* Flexbox für Zentrierung */
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      background-color: #FF5E5B; /* Ko-fi Rot */
-      padding: 8px; /* Kompaktes Padding */
-      border-radius: 50%; /* Runder Button */
+      background-color: #FF5E5B;
+      padding: 8px;
+      border-radius: 50%;
       margin-top: 10px;
       transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s;
       box-shadow: 0 2px 4px rgba(255, 94, 91, 0.3);
-      text-decoration: none; /* Wichtig für Links */
-      line-height: 0; /* Verhindert zusätzlichen Platz unter dem Bild */
+      text-decoration: none;
+      line-height: 0;
     }
     .kofi-button img {
-      width: 24px; /* Größe des Icons */
+      width: 24px;
       height: 24px;
-      display: block; /* Verhindert unerwünschte Abstände */
+      display: block;
     }
     .kofi-button:hover {
-      transform: translateY(-2px); /* Leichter Hebe-Effekt */
+      transform: translateY(-2px);
       opacity: 0.95;
       box-shadow: 0 4px 8px rgba(255, 94, 91, 0.4);
     }
@@ -102,6 +126,13 @@
       
       <label data-i18n="lblSuffix">Suffix:</label>
       <textarea id="customSuffix" placeholder="..."></textarea>
+      
+      <!-- V1.5: Tab Split Toggle -->
+      <div class="toggle-wrapper" style="margin-top:15px; padding-top:15px; border-top:1px dashed #e2e8f0;">
+        <label data-i18n="lblSplitTab" style="margin:0; font-weight:bold;">🗔 Tab-Ansicht splitten</label>
+        <div class="toggle-switch" id="splitTabToggle"></div>
+      </div>
+      <div class="hint" data-i18n="hintSplitTab" style="margin-top:5px;">Quellseite links, KI-Chat rechts anzeigen (Default: aus)</div>
     </div>
 
     <div id="status"></div>

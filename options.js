@@ -1,4 +1,4 @@
-// options.js - Modul 12: Quick Prompts & Refactoring
+// options.js - Modul 13: V1.5 Tab Split Feature
 
 const DEFAULT_PROVIDERS = [
   { key: 'chatgpt', name: 'ChatGPT (OpenAI)', url: 'https://chatgpt.com/' },
@@ -12,7 +12,6 @@ const localizeHtml = () => {
     const msg = chrome.i18n.getMessage(key);
     if (msg) element.textContent = msg;
   });
-  // Placeholders
   document.getElementById('newProviderName').placeholder = chrome.i18n.getMessage('phName');
   document.getElementById('newProviderUrl').placeholder = chrome.i18n.getMessage('phUrl');
   document.getElementById('customPrefix').placeholder = chrome.i18n.getMessage('phPrefix');
@@ -69,7 +68,6 @@ const renderQuickPrompts = (list) => {
     container.appendChild(div);
   });
   
-  // Delete Handler für beide Listen
   document.querySelectorAll('.btn-delete').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const idx = e.target.dataset.index;
@@ -132,8 +130,14 @@ const saveOptions = () => {
   const provider = document.getElementById('provider').value;
   const prefix = document.getElementById('customPrefix').value;
   const suffix = document.getElementById('customSuffix').value;
+  const splitTabActive = document.getElementById('splitTabToggle').classList.contains('active');
   
-  chrome.storage.sync.set({ selectedProvider: provider, customPrefix: prefix, customSuffix: suffix }, () => {
+  chrome.storage.sync.set({ 
+    selectedProvider: provider, 
+    customPrefix: prefix, 
+    customSuffix: suffix,
+    splitTab: splitTabActive 
+  }, () => {
     const status = document.getElementById('status');
     status.textContent = chrome.i18n.getMessage("statusSaved");
     status.style.opacity = '1';
@@ -144,13 +148,26 @@ const saveOptions = () => {
 const restoreOptions = () => {
   localizeHtml();
   chrome.storage.sync.get({
-    selectedProvider: 'chatgpt', customPrefix: '', customSuffix: '', customProviders: [], quickPrompts: []
+    selectedProvider: 'chatgpt', 
+    customPrefix: '', 
+    customSuffix: '', 
+    customProviders: [], 
+    quickPrompts: [],
+    splitTab: false  // V1.5: Default OFF
   }, (items) => {
     renderDropdown(items.customProviders, items.selectedProvider);
     renderCustomList(items.customProviders);
     renderQuickPrompts(items.quickPrompts);
     document.getElementById('customPrefix').value = items.customPrefix;
     document.getElementById('customSuffix').value = items.customSuffix;
+    
+    // V1.5: Restore split tab toggle
+    const toggle = document.getElementById('splitTabToggle');
+    if (items.splitTab) {
+      toggle.classList.add('active');
+    } else {
+      toggle.classList.remove('active');
+    }
     
     chrome.commands.getAll((cmds) => {
       const c = cmds.find(x => x.name === 'send_text_to_ai');
@@ -166,3 +183,9 @@ document.getElementById('customSuffix').addEventListener('input', saveOptions);
 document.getElementById('addProvider').addEventListener('click', addCustomProvider);
 document.getElementById('addQuickPrompt').addEventListener('click', addQuickPrompt);
 document.getElementById('changeShortcut').addEventListener('click', () => chrome.tabs.create({ url: 'chrome://extensions/shortcuts' }));
+
+// V1.5: Toggle click handler
+document.getElementById('splitTabToggle').addEventListener('click', function() {
+  this.classList.toggle('active');
+  saveOptions();
+});

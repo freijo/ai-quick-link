@@ -1,4 +1,4 @@
-// background.js - Modul 13.1: iFrame Focus Fix
+// background.js - Modul 14: V1.5 Tab Split Feature
 
 const DEFAULT_URLS = {
   chatgpt: "https://chatgpt.com/",
@@ -44,7 +44,7 @@ async function executeAction(tab, menuId, directTextFromMenu = null) {
   try {
     let textToProcess = "";
 
-    // 1. Wenn Rechtsklick -> Nimm den Text direkt (Sicherste Methode)
+    // 1. Wenn Rechtsklick -> Nimm den Text direkt
     if (directTextFromMenu) {
       textToProcess = directTextFromMenu.trim();
     } 
@@ -57,28 +57,24 @@ async function executeAction(tab, menuId, directTextFromMenu = null) {
         func: () => {
           return {
             text: window.getSelection().toString(),
-            isFocused: document.hasFocus() // WICHTIG: Hat dieser Frame den Fokus?
+            isFocused: document.hasFocus()
           };
         }
       });
 
       if (results && results.length > 0) {
-        // A. Suche zuerst den Frame, der Fokus UND Text hat (Der Gewinner)
         const focusedFrame = results.find(r => r.result && r.result.isFocused && r.result.text.trim().length > 0);
         
         if (focusedFrame) {
-           textToProcess = focusedFrame.result.text.trim();
+          textToProcess = focusedFrame.result.text.trim();
         } else {
-           // B. Fallback: Falls kein Fokus erkannt wurde, nimm den ersten mit Text,
-           // aber ignoriere Frames, die nur HTML-Tags als Text liefern (einfacher Filter)
-           const anyFrame = results.find(r => {
-             const t = (r.result && r.result.text) ? r.result.text.trim() : "";
-             // Ignoriere, wenn der Text mit "<iframe" beginnt und mit ">" endet
-             const looksLikeTag = t.startsWith("<iframe") && t.endsWith(">");
-             return t.length > 0 && !looksLikeTag;
-           });
+          const anyFrame = results.find(r => {
+            const t = (r.result && r.result.text) ? r.result.text.trim() : "";
+            const looksLikeTag = t.startsWith("<iframe") && t.endsWith(">");
+            return t.length > 0 && !looksLikeTag;
+          });
 
-           if (anyFrame) textToProcess = anyFrame.result.text.trim();
+          if (anyFrame) textToProcess = anyFrame.result.text.trim();
         }
       }
     }
@@ -88,14 +84,14 @@ async function executeAction(tab, menuId, directTextFromMenu = null) {
       return;
     }
 
-    // --- Ab hier Standard-Ablauf ---
-
+    // --- V1.5: Load SplitTab setting + Standard-Ablauf ---
     const data = await chrome.storage.sync.get({
       selectedProvider: 'chatgpt',
       customProviders: [],
       customPrefix: '',
       customSuffix: '',
-      quickPrompts: []
+      quickPrompts: [],
+      splitTab: false  // Default OFF
     });
 
     let prefix = "";
@@ -127,7 +123,37 @@ async function executeAction(tab, menuId, directTextFromMenu = null) {
     }
     if (!targetUrl) targetUrl = DEFAULT_URLS['chatgpt'];
 
-    chrome.tabs.create({ url: targetUrl, active: true });
+    // V1.5: Tab Split Logic
+    if (data.splitTab) {
+      // Get current window for resizing
+      const currentWindow = await chrome.windows.get(tab.windowId);
+      const screenWidth = screen.availWidth || 1920;
+      const halfWidth = Math.round(screenWidth / 2);
+      
+      // Resize source window to left half
+      if (currentWindow.type === 'normal') {
+        await chrome.windows.update(tab.windowId, {
+          left: 0,
+          top: 0,
+          width: halfWidth,
+          height: screen.availHeight || 1080
+        });
+      }
+      
+      // Open AI in new window on right half
+      await chrome.windows.create({
+        url: targetUrl,
+        left: halfWidth,
+        top: 0,
+        width: halfWidth,
+        height: screen.availHeight || 1080,
+        focused: true,
+        type: 'normal'
+      });
+    } else {
+      // Original behavior: Same window new tab
+      chrome.tabs.create({ url: targetUrl, active: true });
+    }
 
   } catch (err) {
     console.error("AI Quick Link Error:", err);
@@ -147,8 +173,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   executeAction(tab, info.menuItemId, info.selectionText);
 });
 
-// --- LEFT-CLICK SUPPORT (NEW) ---
-// Open options when user left-clicks the plugin icon
+// --- LEFT-CLICK SUPPORT ---
 chrome.action.onClicked.addListener((tab) => {
   chrome.runtime.openOptionsPage();
 });
